@@ -3,6 +3,7 @@ const lblEscritorio  = document.querySelector('h1');
 const btnAtender = document.querySelector('button');
 const lblticket = document.querySelector('small');
 const divAlerta = document.querySelector('.alert');
+const lblPendientes = document.querySelector('#lblPendientes')
 
 
 const searchParams = new URLSearchParams(window.location.search);
@@ -16,11 +17,12 @@ if( !searchParams.has('escritorio') ){
 const escritorio = searchParams.get('escritorio');
 lblEscritorio.innerText = escritorio;
 
-
 divAlerta.style.display = 'none'
+
 
 const socket = io();
 
+// Aca estabn todos los que escuchan o listeners
 socket.on('connect', () => {
     
     btnAtender.disabled = false;
@@ -32,10 +34,19 @@ socket.on('disconnect', () => {
     btnAtender.disabled = true;
 });
 
-socket.on('ultimo-ticket', (ultimo) => {
+socket.on('tickets-pendientes', (pendientes) => {
+    if (pendientes === 0){
+        lblPendientes.style.display = 'none';
+    }else {
+        lblPendientes.style.display = '';
+        lblPendientes.innerText = pendientes;
+    }
+
     
-    // lblNuevoTicket.innerText = "ticket " +  ultimo;
 });
+
+
+
 
 btnAtender.addEventListener( 'click', () => {
 

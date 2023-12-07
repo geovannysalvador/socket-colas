@@ -4,10 +4,16 @@ const ticketControl = new TicketControl();
 
 const socketController = (socket) => {
 
+    //  ttodos esos emit es cuano un nuevo cliente se conecta estos manda no escucha
     // Cuando el socket se conecte 
     socket.emit('ultimo-ticket', ticketControl.ultimo);
     // Mandarlo desde que se conecte
     socket.emit('estado-actual', ticketControl.ultimos4);
+    // Escuchando la cola pendiente por atender
+    socket.emit('tickets-pendientes', ticketControl.tickets.length);
+
+
+
 
     socket.on('siguiente-ticket', (payload, callback) => {
 
@@ -15,8 +21,11 @@ const socketController = (socket) => {
         callback(siguiente);
 
         // Notificar que hay nuevo ticket para asignar
+        socket.broadcast.emit('tickets-pendientes', ticketControl.tickets.length);
 
     });
+
+
 
     socket.on('atender-ticket', ({ escritorio }, callback) => {
 
@@ -32,6 +41,9 @@ const socketController = (socket) => {
         // Notificar vamnio en los ultimos4
         // Mandarlo desde que se conecte
         socket.broadcast.emit('estado-actual', ticketControl.ultimos4);
+        // emitir los tickets pendientes a todos
+        socket.emit('tickets-pendientes', ticketControl.tickets.length);
+        socket.broadcast.emit('tickets-pendientes', ticketControl.tickets.length);
 
         if (!ticket) {
             callback({
