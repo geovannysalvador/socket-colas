@@ -1,3 +1,43 @@
+// REferencias HTML
+const lblEscritorio  = document.querySelector('h1');
+const btnAtender = document.querySelector('button');
+
+const searchParams = new URLSearchParams(window.location.search);
+
+if( !searchParams.has('escritorio') ){
+
+    window.location = 'index.html';
+    throw new Error('El escitorio es obligatorio');
+}
+
+const escritorio = searchParams.get('escritorio');
+lblEscritorio.innerText = escritorio;
 
 
-console.log('Escritorio HTML');
+const socket = io();
+
+socket.on('connect', () => {
+    
+    btnAtender.disabled = false;
+
+});
+
+socket.on('disconnect', () => {
+    
+    btnAtender.disabled = true;
+});
+
+socket.on('ultimo-ticket', (ultimo) => {
+    
+    // lblNuevoTicket.innerText = "ticket " +  ultimo;
+});
+
+btnAtender.addEventListener( 'click', () => {
+
+    
+    // // Evento que ya cree en: sockets/controller.js
+    // socket.emit( 'siguiente-ticket', null, ( ticket ) => {
+    //     lblNuevoTicket.innerText = ticket
+    // });
+
+});
