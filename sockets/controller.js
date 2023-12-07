@@ -1,13 +1,16 @@
 const { TicketControl } = require('../models/ticket-control');
 
-const ticketControl =  new TicketControl();
+const ticketControl = new TicketControl();
 
 const socketController = (socket) => {
 
+    // Cuando el socket se conecte 
     socket.emit('ultimo-ticket', ticketControl.ultimo);
+    // Mandarlo desde que se conecte
+    socket.emit('estado-actual', ticketControl.ultimos4);
 
-    socket.on('siguiente-ticket', ( payload, callback ) => {
-        
+    socket.on('siguiente-ticket', (payload, callback) => {
+
         const siguiente = ticketControl.siguienteTicket();
         callback(siguiente);
 
@@ -15,9 +18,9 @@ const socketController = (socket) => {
 
     });
 
-    socket.on('atender-ticket', ({escritorio}, callback) =>{
-        
-        if(!escritorio){
+    socket.on('atender-ticket', ({ escritorio }, callback) => {
+
+        if (!escritorio) {
             return callback({
                 ok: false,
                 msg: 'El escritorio es obligatorio',
@@ -27,13 +30,15 @@ const socketController = (socket) => {
         const ticket = ticketControl.atenderTicket(escritorio);
 
         // Notificar vamnio en los ultimos4
+        // Mandarlo desde que se conecte
+        socket.broadcast.emit('estado-actual', ticketControl.ultimos4);
 
-        if (!ticket){
+        if (!ticket) {
             callback({
                 ok: false,
                 msg: 'Ya no hay tickets por atender',
             });
-        }else {
+        } else {
             callback({
                 ok: true,
                 ticket,
