@@ -1,1 +1,71 @@
-{"ultimo":3,"hoy":7,"tickets":[{"numero":1,"escritorio":null},{"numero":2,"escritorio":null},{"numero":3,"escritorio":null}],"ultimos4":[]}
+{
+    "ultimo": 16,
+    "hoy": 7,
+    "tickets": [],
+    "ultimos4": [
+        {
+            "numero": 16,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 15,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 14,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 13,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 12,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 11,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 10,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 9,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 8,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 7,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 6,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 5,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 4,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 3,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 2,
+            "escritorio": "Escritorio 1"
+        },
+        {
+            "numero": 1,
+            "escritorio": "Escritorio 1"
+        }
+    ]
+}
