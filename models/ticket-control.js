@@ -1,6 +1,12 @@
 const path = require('path');
 const fs = require('fs');
-const { json } = require('express');
+
+class Ticket {
+    constructor(numero, escritorio){
+        this.numero = numero;
+        this.escritorio = escritorio;
+    }
+}
 
 class TicketControl {
 
@@ -45,9 +51,45 @@ class TicketControl {
         fs.writeFileSync( dbPath, JSON.stringify(this.toJson) )
     }
 
+    siguienteTicket(){
+
+        this.ultimimo += 1;
+        const ticket = new Ticket(this.ultimimo, null);
+        // Insertar en el arreglo 
+        this.tickets.push( ticket );
+
+        this.guardarDB();
+        return 'Ticket ' + ticket.numero;
+
+    }
+
+    atenderTicket(escritorio){
+
+        // No tenemos ticket 
+        if (this.tickets.length === 0){
+            return null;
+        }
+
+        // const ticket = this.tickets[0];
+        const ticket = this.tickets.shift();
+        ticket.escritorio = escritorio;
+
+        // mandar los ultimos 4 al principio 
+        this.ultimos4.unshift(ticket);
+
+        if(this.ultimos4 > 4 ){
+            this.ultimos4.splice(-1,1);
+        }
+
+        this.guardarDB();
+        return ticket;
+
+    }
+
 
 }
 
 module.exports = {
-    TicketControl
+    TicketControl,
+    Ticket,
 }
