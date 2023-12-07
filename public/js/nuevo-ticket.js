@@ -1,3 +1,33 @@
+// REferencias HTML
+const lblNuevoTicket  = document.querySelector('#lblNuevoTicket');
+const btnCrear = document.querySelector('button');
+
+const socket = io();
 
 
-console.log('Nuevo Ticket HTML');
+
+socket.on('connect', () => {
+    
+    btnCrear.disabled = false;
+
+});
+
+socket.on('disconnect', () => {
+    
+    btnCrear.disabled = true;
+});
+
+socket.on('ultimo-ticket', (ultimo) => {
+    
+    lblNuevoTicket.innerText = "ticket " +  ultimo;
+});
+
+btnCrear.addEventListener( 'click', () => {
+
+    
+    // Evento que ya cree en: sockets/controller.js
+    socket.emit( 'siguiente-ticket', null, ( ticket ) => {
+        lblNuevoTicket.innerText = ticket
+    });
+
+});

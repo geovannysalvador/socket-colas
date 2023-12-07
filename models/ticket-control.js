@@ -11,7 +11,7 @@ class Ticket {
 class TicketControl {
 
     constructor(){
-        this.ultimimo = 0;
+        this.ultimo = 0;
         this.hoy = new Date().getDate();
         this.tickets = [];
         this.ultimos4 = [];
@@ -23,7 +23,7 @@ class TicketControl {
     get toJson (){
 
         return{
-            ultimimo: this.ultimimo,
+            ultimo: this.ultimo,
             hoy: this.hoy,
             tickets: this.tickets,
             ultimos4: this.ultimos4,
@@ -33,11 +33,11 @@ class TicketControl {
 
     // Leer el archivo jSon
     init(){
-        const {hoy, tickets, ultimimo, ultimos4} = require('../db/data.json');
+        const {hoy, tickets, ultimo, ultimos4} = require('../db/data.json');
         // Verificar el dia para cargarlo 
         if( hoy === this.hoy){
             this.tickets = tickets;
-            this.ultimimo = ultimimo;
+            this.ultimo = ultimo;
             this.ultimos4 = ultimos4;
         }else{
             // es otro dia
@@ -53,8 +53,8 @@ class TicketControl {
 
     siguienteTicket(){
 
-        this.ultimimo += 1;
-        const ticket = new Ticket(this.ultimimo, null);
+        this.ultimo += 1;
+        const ticket = new Ticket(this.ultimo, null);
         // Insertar en el arreglo 
         this.tickets.push( ticket );
 
